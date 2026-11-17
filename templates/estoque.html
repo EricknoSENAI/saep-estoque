@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block titulo %}Gestão de Estoque{% endblock %}
+{% block conteudo %}
+<p><a class="btn" href="{{ url_for('principal') }}">← Tela principal</a></p>
+<div class="card">
+ <h3>Registrar movimentação</h3>
+ <form method="post" action="{{ url_for('movimentar') }}">
+  <div class="grid">
+   <div><label>Produto</label>
+    <select name="produto_id" required><option value="">Selecione…</option>
+     {% for p in lista %}<option value="{{ p.id }}">{{ p.nome }} (estoque: {{ p.estoque_atual }})</option>{% endfor %}
+    </select></div>
+   <div><label>Tipo</label>
+    <select name="tipo" required><option value="">Selecione…</option>
+     <option value="entrada">Entrada</option><option value="saida">Saída</option></select></div>
+   <div><label>Quantidade</label><input name="quantidade" type="number" min="1" required></div>
+   <div><label>Data</label><input name="data" type="date" value="{{ hoje }}" required></div>
+  </div>
+  <label>Observação</label><input name="observacao" maxlength="200">
+  <p><button>Registrar</button></p>
+ </form>
+</div>
+<div class="card">
+ <h3>Produtos (ordem alfabética)</h3>
+ <table><tr><th>Produto</th><th>Atual</th><th>Mínimo</th><th>Situação</th></tr>
+ {% for p in lista %}<tr><td>{{ p.nome }}</td><td>{{ p.estoque_atual }}</td><td>{{ p.estoque_minimo }}</td>
+  <td>{% if p.estoque_atual < p.estoque_minimo %}<span class="baixo">Abaixo do mínimo</span>{% else %}OK{% endif %}</td></tr>{% endfor %}
+ </table>
+</div>
+<div class="card">
+ <h3>Histórico de movimentações</h3>
+ <table><tr><th>Data</th><th>Produto</th><th>Tipo</th><th>Qtd.</th><th>Responsável</th><th>Obs.</th></tr>
+ {% for m in hist %}<tr><td>{{ m.data_movimentacao.strftime('%d/%m/%Y') }}</td><td>{{ m.produto }}</td>
+  <td>{{ 'Entrada' if m.tipo=='entrada' else 'Saída' }}</td><td>{{ m.quantidade }}</td><td>{{ m.responsavel }}</td><td>{{ m.observacao or '' }}</td></tr>{% endfor %}
+ </table>
+</div>
+{% endblock %}

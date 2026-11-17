@@ -1,0 +1,5 @@
+1) Importe o banco:   mysql -u root -p < saep_db.sql
+2) Instale:           pip install -r requirements.txt
+3) Configure (opcional): DB_HOST, DB_USER, DB_PASSWORD (variáveis de ambiente)
+4) Execute:           python app.py   -> http://127.0.0.1:5000
+Login de teste: ana@loja.com / 123456

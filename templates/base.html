@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block titulo %}Estoque{% endblock %} · Loja de Informática</title>
+<style>
+ body{font-family:system-ui,sans-serif;margin:0;background:#f4f6f8;color:#222}
+ header{background:#1f3a5f;color:#fff;padding:12px 24px;display:flex;justify-content:space-between;align-items:center}
+ header a{color:#fff;margin-left:16px}
+ main{max-width:1000px;margin:24px auto;padding:0 16px}
+ .card{background:#fff;border-radius:8px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px #0002}
+ label{display:block;margin:10px 0 4px;font-weight:600}
+ input,select{padding:8px;width:100%;box-sizing:border-box;border:1px solid #bbb;border-radius:4px}
+ button,.btn{background:#1f3a5f;color:#fff;border:0;padding:9px 16px;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-block}
+ .perigo{background:#b3261e}
+ table{width:100%;border-collapse:collapse} th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left;font-size:14px}
+ .msg{padding:10px 14px;border-radius:4px;margin-bottom:10px}
+ .erro{background:#fde7e7;color:#8a1c1c}.ok{background:#e3f4e6;color:#1d5c2a}.alerta{background:#fff3cd;color:#7a5600;font-weight:700}
+ .grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+ .baixo{color:#b3261e;font-weight:700}
+</style>
+</head>
+<body>
+{% if session.usuario_nome %}
+<header><strong>Controle de Estoque</strong>
+ <span>Usuário: {{ session.usuario_nome }} <a href="{{ url_for('logout') }}">Sair</a></span></header>
+{% endif %}
+<main>
+ {% for cat, m in get_flashed_messages(with_categories=true) %}<div class="msg {{ cat }}">{{ m }}</div>{% endfor %}
+ {% block conteudo %}{% endblock %}
+</main>
+</body></html>

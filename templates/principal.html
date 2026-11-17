@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titulo %}Principal{% endblock %}
+{% block conteudo %}
+<div class="card">
+ <h2>Olá, {{ session.usuario_nome }}</h2>
+ <a class="btn" href="{{ url_for('produtos') }}">Cadastro de Produto</a>
+ <a class="btn" href="{{ url_for('estoque') }}">Gestão de Estoque</a>
+</div>
+<div class="card">
+ <h3>Produtos abaixo do estoque mínimo</h3>
+ {% if baixos %}
+ <table><tr><th>Produto</th><th>Atual</th><th>Mínimo</th></tr>
+ {% for b in baixos %}<tr><td>{{ b.nome }}</td><td class="baixo">{{ b.estoque_atual }}</td><td>{{ b.estoque_minimo }}</td></tr>{% endfor %}
+ </table>
+ {% else %}<p>Nenhum produto abaixo do mínimo.</p>{% endif %}
+</div>
+{% endblock %}
